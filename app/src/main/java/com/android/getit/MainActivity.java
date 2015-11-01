@@ -1,8 +1,14 @@
 package com.android.getit;
 
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,16 +18,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+
+import com.android.getit.Utils.FrescoLoaderImage;
+import com.android.getit.Utils.ImageLoaderManager;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    Boolean test = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if(test) {
+            final Uri proImageUri = Uri.parse("http://pooyak.com/p/progjpeg/jpegload.cgi?o=1"); // the best image to show loading progressive.
+            final Uri lowImageUri = Uri.parse("http://u4.tdimg.com/7/147/82/31804659546604080410941337579323207967.jpg");
+//        ImageView imageView = (ImageView)findViewById(R.id.progressive);
+            SimpleDraweeView simpleDraweeView = (SimpleDraweeView) findViewById(R.id.GetITImage);
+
+            try {
+//            ImageLoaderManager.getInstance().displayImage("http://u4.tdimg.com/7/147/82/31804659546604080410941337579323207967.jpg", imageView);
+//            imageView.setVisibility(View.GONE);
+                FrescoLoaderImage.loaderProgressively(simpleDraweeView, lowImageUri, FrescoLoaderImage.getProgressGDHHierarchy(getResources()));
+
+            } catch (Exception excetion) {
+                excetion.printStackTrace();
+            }
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
