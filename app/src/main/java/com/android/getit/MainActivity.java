@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -22,6 +23,8 @@ import android.widget.ImageView;
 
 import com.android.getit.Utils.FrescoLoaderImage;
 import com.android.getit.Utils.ImageLoaderManager;
+import com.android.getit.fragment.FragmentHome;
+import com.android.getit.fragment.FragmentShare;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 public class MainActivity extends AppCompatActivity
@@ -34,28 +37,32 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(test) {
-            final Uri proImageUri = Uri.parse("http://pooyak.com/p/progjpeg/jpegload.cgi?o=1"); // the best image to show loading progressive.
-            final Uri lowImageUri = Uri.parse("http://u4.tdimg.com/7/147/82/31804659546604080410941337579323207967.jpg");
-//        ImageView imageView = (ImageView)findViewById(R.id.progressive);
-            SimpleDraweeView simpleDraweeView = (SimpleDraweeView) findViewById(R.id.GetITImage);
-
-            try {
-//            ImageLoaderManager.getInstance().displayImage("http://u4.tdimg.com/7/147/82/31804659546604080410941337579323207967.jpg", imageView);
-//            imageView.setVisibility(View.GONE);
-                FrescoLoaderImage.loaderProgressively(simpleDraweeView, lowImageUri, FrescoLoaderImage.getProgressGDHHierarchy(getResources()));
-
-            } catch (Exception excetion) {
-                excetion.printStackTrace();
-            }
-        }
+//        if(test) {
+//            final Uri proImageUri = Uri.parse("http://pooyak.com/p/progjpeg/jpegload.cgi?o=1"); // the best image to show loading progressive.
+//            final Uri lowImageUri = Uri.parse("http://u4.tdimg.com/7/147/82/31804659546604080410941337579323207967.jpg");
+////        ImageView imageView = (ImageView)findViewById(R.id.progressive);
+//            SimpleDraweeView simpleDraweeView = (SimpleDraweeView) findViewById(R.id.GetITImage);
+//
+//            try {
+////            ImageLoaderManager.getInstance().displayImage("http://u4.tdimg.com/7/147/82/31804659546604080410941337579323207967.jpg", imageView);
+////            imageView.setVisibility(View.GONE);
+//                FrescoLoaderImage.loaderProgressively(simpleDraweeView, lowImageUri, FrescoLoaderImage.getProgressGDHHierarchy(getResources()));
+//
+//            } catch (Exception excetion) {
+//                excetion.printStackTrace();
+//            }
+//        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, FragmentShare.newInstance(0))
+                        .commit();
             }
         });
 
@@ -104,20 +111,25 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
+        if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, FragmentHome.newInstance(item.getOrder() + 1))
+                    .commit();
 
         } else if (id == R.id.nav_share) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, FragmentShare.newInstance(item.getOrder() + 1))
+                    .commit();
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_feedback) {
+
+        } else if (id == R.id.nav_about) {
 
         }
 
