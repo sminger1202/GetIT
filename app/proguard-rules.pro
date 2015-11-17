@@ -15,3 +15,18 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keep class com.easemob.** {*;}
+-keep class org.jivesoftware.** {*;}
+-keep class org.apache.** {*;}
+-dontwarn  com.easemob.**
+-keep class com.easemob.chatuidemo.utils.SmileUtils {*;}
+-keep class com.easemob.easeui.utils.EaseSmileUtils {*;}
+-dontwarn ch.imvs.**
+-dontwarn org.slf4j.**
+-keep class org.ice4j.** {*;}
+-keep class net.java.sip.** {*;}
+-keep class org.webrtc.voiceengine.** {*;}
+-keep class org.bitlet.** {*;}
+-keep class org.slf4j.** {*;}
+-keep class ch.imvs.** {*;}

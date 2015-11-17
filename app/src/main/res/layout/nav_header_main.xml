@@ -16,7 +16,9 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:layout_gravity="center"
         android:src="@android:drawable/sym_def_app_icon"
-        android:id="@+id/imageView" />
+        android:id="@+id/loginHead"
+        android:onClick="Register"
+        />
 
     <TextView
         android:layout_width="match_parent"

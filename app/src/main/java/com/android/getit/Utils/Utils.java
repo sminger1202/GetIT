@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.getit.GetITApp;
 
@@ -22,6 +23,7 @@ import java.security.NoSuchAlgorithmException;
 public class Utils {
     public static final int KB = 1024;
     public static final int MB = 1048576;
+    public static final int REGISTER = 100;
     /**
      * TODO �ж�����״̬�Ƿ����
      *
@@ -129,6 +131,12 @@ public class Utils {
             return String.valueOf(tm.getNetworkType());
         } else {
             return "OTHER";
+        }
+    }
+
+    public static void DebugShow(Context context, String str) {
+        if(Profile.Debug) {
+            Toast.makeText(context, str, Toast.LENGTH_LONG).show();
         }
     }
 }

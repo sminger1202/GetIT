@@ -1,15 +1,8 @@
 package com.android.getit;
 
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,22 +14,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.android.getit.Utils.FrescoLoaderImage;
-import com.android.getit.Utils.ImageLoaderManager;
+import com.android.getit.Utils.Utils;
+import com.android.getit.fragment.BaseFragment;
 import com.android.getit.fragment.FragmentHome;
+import com.android.getit.fragment.FragmentLogin;
+import com.android.getit.fragment.FragmentRegister;
 import com.android.getit.fragment.FragmentShare;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, BaseFragment.callBack{
 
-    Boolean test = false;
+    public FragmentManager mFragmentManager = getSupportFragmentManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 //        if(test) {
 //            final Uri proImageUri = Uri.parse("http://pooyak.com/p/progjpeg/jpegload.cgi?o=1"); // the best image to show loading progressive.
 //            final Uri lowImageUri = Uri.parse("http://u4.tdimg.com/7/147/82/31804659546604080410941337579323207967.jpg");
@@ -57,10 +52,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
+                mFragmentManager.beginTransaction()
                         .replace(R.id.container, FragmentShare.newInstance(0))
                         .commit();
             }
@@ -74,8 +66,26 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        initView();
+
+        // deal with the nav_header
     }
 
+    public void initView() {
+        ImageView loginView = (ImageView) findViewById(R.id.loginHead);
+        loginView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFragmentManager.beginTransaction()
+                        .replace(R.id.container, FragmentLogin.newInstance(0))
+                        .commit();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+
+
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -111,19 +121,17 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-            fragmentManager.beginTransaction()
+            mFragmentManager.beginTransaction()
                     .replace(R.id.container, FragmentHome.newInstance(item.getOrder() + 1))
                     .commit();
 
         } else if (id == R.id.nav_share) {
-            fragmentManager.beginTransaction()
+            mFragmentManager.beginTransaction()
                     .replace(R.id.container, FragmentShare.newInstance(item.getOrder() + 1))
                     .commit();
 
@@ -136,5 +144,26 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * this is for inner fragment navigation.
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean onNavigationFragmentSelected(int id) {
+        if (id == R.id.nav_home) {
+            mFragmentManager = getSupportFragmentManager();
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.container, FragmentHome.newInstance(0))
+                    .commit();
+        } else if (id == Utils.REGISTER) {
+            mFragmentManager = getSupportFragmentManager();
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.container, FragmentRegister.newInstance(0))
+                    .commit();
+        }
+        return false;
     }
 }

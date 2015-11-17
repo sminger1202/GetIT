@@ -3,8 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <!--<com.facebook.drawee.view.SimpleDraweeView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:src="@drawable/bottom_small"/>-->
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00ff00"/>
+        android:src="@drawable/bottom_small"/>
 </LinearLayout>
