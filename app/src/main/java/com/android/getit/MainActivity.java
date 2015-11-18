@@ -1,5 +1,6 @@
 package com.android.getit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -13,13 +14,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.android.getit.EMChatModule.ChatHelper;
+import com.android.getit.UserModule.UserHelper;
 import com.android.getit.Utils.Utils;
 import com.android.getit.fragment.BaseFragment;
 import com.android.getit.fragment.FragmentHome;
 import com.android.getit.fragment.FragmentLogin;
 import com.android.getit.fragment.FragmentRegister;
 import com.android.getit.fragment.FragmentShare;
+import com.android.getit.ui.SimpleChat;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BaseFragment.callBack{
@@ -52,9 +57,21 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mFragmentManager.beginTransaction()
-                        .replace(R.id.container, FragmentShare.newInstance(0))
-                        .commit();
+//                mFragmentManager.beginTransaction()
+//                        .replace(R.id.container, FragmentShare.newInstance(0))
+//                        .commit();
+                // TODO: 2015/11/18 jump to simple chat activity
+                if(!ChatHelper.getInstance().isLogin()) {
+                    mFragmentManager = getSupportFragmentManager();
+                    mFragmentManager.beginTransaction()
+                            .replace(R.id.container, FragmentLogin.newInstance(0))
+                            .commit();
+                    Toast.makeText(getApplicationContext(),"请先登录！",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(), SimpleChat.class);
+                startActivity(intent);
             }
         });
 
@@ -165,5 +182,12 @@ public class MainActivity extends AppCompatActivity
                     .commit();
         }
         return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UserHelper.getInstance().logout();
+
     }
 }

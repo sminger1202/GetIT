@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom">
+
+    <LinearLayout
+        android:id="@+id/toUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        >
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="3"/>
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/chatlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linear"
+        android:layout_below="@+id/toUser"
+        android:background="@color/background_floating_material_light">
+
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        >
+        <EditText
+            android:id="@+id/inputText"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="3"/>
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

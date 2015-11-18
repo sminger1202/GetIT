@@ -70,7 +70,7 @@ public class ChatHelper {
             EMChat.getInstance().setDebugMode(true);
             //get easeui instance
             mEaseUI = EaseUI.getInstance();
-//            //调用easeui的api设置providers
+            //调用easeui的api设置providers
 //            setEaseUIProviders();
 //            demoModel = new DemoModel(context);
 //            //设置chat options
@@ -195,6 +195,9 @@ public class ChatHelper {
         return  EMChat.getInstance().isLoggedIn();
     }
 
+    public void logout() {
+        EMChatManager.getInstance().logout();
+    }
     synchronized void reset(){
         //TODO 应该释放相应的资源
     }

@@ -124,4 +124,9 @@ public class UserHelper {
 //        mLoginRequest = null;
     }
 
+    public void logout() {
+        // TODO: 2015/11/18 app 添加app退出
+        ChatHelper.getInstance().logout();
+    }
+
 }
