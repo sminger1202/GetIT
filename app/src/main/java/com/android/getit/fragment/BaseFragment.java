@@ -15,11 +15,15 @@ import com.android.getit.MainActivity;
  */
 public class BaseFragment extends Fragment {
     public callBack mCallBack = null;
+    private setArgCallBack mSetArgumentsCallBack = null;
     public interface callBack {
         boolean onNavigationFragmentSelected(int id);
 
     }
-    static final String ARG_SITE_NUMBER = "Number";
+    public interface setArgCallBack<T> {
+        void setArgs(T fragmet);
+    }
+    public static final String ARG_SITE_NUMBER = "Number";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +44,21 @@ public class BaseFragment extends Fragment {
 
     }
 
-//    public static <T> T newInstance(int position, Class<T> clazz) {
-//        return null;
-//    }
+    public static <T> T newInstance(int position, Class<T> clazz ){
+        return newInstance(position, clazz, null);
+    }
+    public static <T> T newInstance(int position, Class<T> clazz,setArgCallBack setArgCallBack ) {
+        T instance = null;
+        try {
+            instance = clazz.newInstance();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        Bundle args = new Bundle();
+        args.putInt(ARG_SITE_NUMBER, position);
+        if(null != instance && null != setArgCallBack) {
+            setArgCallBack.setArgs(instance);
+        }
+        return instance;
+    }
 }

@@ -137,14 +137,25 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected( final MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
             // Handle the camera action
+//            mFragmentManager.beginTransaction()
+//                    .replace(R.id.container, FragmentHome.newInstance(item.getOrder() + 1))
+//                    .commit();
             mFragmentManager.beginTransaction()
-                    .replace(R.id.container, FragmentHome.newInstance(item.getOrder() + 1))
+                    .replace(R.id.container, BaseFragment.newInstance(item.getOrder() + 1, FragmentHome.class,
+                            new BaseFragment.setArgCallBack<FragmentHome>(){
+                                @Override
+                                public void setArgs(FragmentHome fragmentHome){
+                                    Bundle args = new Bundle();
+                                    args.putInt(BaseFragment.ARG_SITE_NUMBER, item.getOrder() + 1);
+                                    fragmentHome.setArguments(args);
+                        }
+                    }))
                     .commit();
 
         } else if (id == R.id.nav_share) {
