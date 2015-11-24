@@ -85,14 +85,6 @@ public class FragmentLogin extends BaseFragment {
         return rootView;
     }
 
-    public static FragmentLogin newInstance(int id) {
-        FragmentLogin fragmentLogin = new FragmentLogin();
-        Bundle bundle = new Bundle();
-        bundle.putInt(ARG_SITE_NUMBER, id);
-        fragmentLogin.setArguments(bundle);
-        return fragmentLogin;
-    }
-
     @OnClick(R.id.login)
     public void login() {
         if (!Utils.hasInternet()) {

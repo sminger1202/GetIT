@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
                 if(!ChatHelper.getInstance().isLogin()) {
                     mFragmentManager = getSupportFragmentManager();
                     mFragmentManager.beginTransaction()
-                            .replace(R.id.container, FragmentLogin.newInstance(0))
+                            .replace(R.id.container, FragmentLogin.newInstance(FragmentLogin.class))
                             .commit();
                     Toast.makeText(getApplicationContext(),"请先登录！",Toast.LENGTH_LONG).show();
                     return;
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 mFragmentManager.beginTransaction()
-                        .replace(R.id.container, FragmentLogin.newInstance(0))
+                        .replace(R.id.container, FragmentLogin.newInstance(FragmentLogin.class))
                         .commit();
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity
 //                    .replace(R.id.container, FragmentHome.newInstance(item.getOrder() + 1))
 //                    .commit();
             mFragmentManager.beginTransaction()
-                    .replace(R.id.container, BaseFragment.newInstance(item.getOrder() + 1, FragmentHome.class,
+                    .replace(R.id.container, FragmentHome.newInstance(FragmentHome.class,
                             new BaseFragment.setArgCallBack<FragmentHome>(){
                                 @Override
                                 public void setArgs(FragmentHome fragmentHome){
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
             mFragmentManager.beginTransaction()
-                    .replace(R.id.container, FragmentShare.newInstance(item.getOrder() + 1))
+                    .replace(R.id.container, FragmentShare.newInstance(FragmentShare.class))
                     .commit();
 
         } else if (id == R.id.nav_feedback) {
@@ -184,12 +184,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             mFragmentManager = getSupportFragmentManager();
             mFragmentManager.beginTransaction()
-                    .replace(R.id.container, FragmentHome.newInstance(0))
+                    .replace(R.id.container, FragmentHome.newInstance(FragmentHome.class))
                     .commit();
         } else if (id == Utils.REGISTER) {
             mFragmentManager = getSupportFragmentManager();
             mFragmentManager.beginTransaction()
-                    .replace(R.id.container, FragmentRegister.newInstance(0))
+                    .replace(R.id.container, FragmentRegister.newInstance(FragmentRegister.class))
                     .commit();
         }
         return false;

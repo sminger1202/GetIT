@@ -45,14 +45,6 @@ public class FragmentRegister extends BaseFragment {
         return rootView;
     }
 
-    public static FragmentRegister newInstance(int position) {
-        FragmentRegister fr = new FragmentRegister();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SITE_NUMBER, position);
-        fr.setArguments(args);
-        return fr;
-    }
-
     @OnClick(R.id.register)
     public void register() {
         final String username = userNameEditText.getText().toString().trim();

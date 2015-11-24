@@ -32,12 +32,4 @@ public class FragmentHome extends BaseFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
     }
-
-    public static FragmentHome newInstance(int position) {
-        FragmentHome mFragmentHome = new FragmentHome();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SITE_NUMBER, position);
-        mFragmentHome.setArguments(args);
-        return mFragmentHome;
-    }
 }

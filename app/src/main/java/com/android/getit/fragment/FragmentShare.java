@@ -31,12 +31,4 @@ public class FragmentShare extends BaseFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
     }
-
-    public static FragmentShare newInstance(int position) {
-        FragmentShare mFragmentShare = new FragmentShare();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SITE_NUMBER, position);
-        mFragmentShare.setArguments(args);
-        return mFragmentShare;
-    }
 }

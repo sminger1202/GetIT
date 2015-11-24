@@ -44,18 +44,16 @@ public class BaseFragment extends Fragment {
 
     }
 
-    public static <T> T newInstance(int position, Class<T> clazz ){
-        return newInstance(position, clazz, null);
+    public static <T> T newInstance(Class<T> clazz ){
+        return newInstance(clazz, null);
     }
-    public static <T> T newInstance(int position, Class<T> clazz,setArgCallBack setArgCallBack ) {
+    public static <T> T newInstance(Class<T> clazz,setArgCallBack setArgCallBack ) {
         T instance = null;
         try {
             instance = clazz.newInstance();
         }catch (Exception e) {
             e.printStackTrace();
         }
-        Bundle args = new Bundle();
-        args.putInt(ARG_SITE_NUMBER, position);
         if(null != instance && null != setArgCallBack) {
             setArgCallBack.setArgs(instance);
         }
