@@ -17,9 +17,25 @@
 
     <include layout="@layout/content_main" />
 
+    <android.support.design.widget.FloatingActionButton android:id="@+id/order"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="160dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_menu_paste_holo_light"
+        android:visibility="gone"
+        />
+
+    <android.support.design.widget.FloatingActionButton android:id="@+id/conversation"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="88dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_start_conversation"
+        android:visibility="gone"
+        />
     <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
-
+        android:src="@android:drawable/ic_menu_add" />
 </android.support.design.widget.CoordinatorLayout>

@@ -1,5 +1,6 @@
 package com.android.getit;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,7 @@ import com.android.getit.Utils.Utils;
 import com.android.getit.fragment.BaseFragment;
 import com.android.getit.fragment.FragmentHome;
 import com.android.getit.fragment.FragmentLogin;
+import com.android.getit.fragment.FragmentOrder;
 import com.android.getit.fragment.FragmentRegister;
 import com.android.getit.fragment.FragmentShare;
 import com.android.getit.ui.SimpleChat;
@@ -53,8 +55,41 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        }
 
+        initFab();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        initView();
+        // deal with the nav_header
+    }
+
+    public void initFab() {
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton convFab = (FloatingActionButton) findViewById(R.id.conversation);
+        final FloatingActionButton orderFab = (FloatingActionButton) findViewById(R.id.order);
         fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (convFab.getVisibility() == View.VISIBLE) {
+                    convFab.setVisibility(View.GONE);
+                    orderFab.setVisibility(View.GONE);
+                } else {
+                    convFab.setVisibility(View.VISIBLE);
+                    float convCurY = convFab.getTranslationY();
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(convFab, "translationY",100 , convCurY);
+                    animator.setDuration(500);
+                    animator.start();
+                    orderFab.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        convFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                mFragmentManager.beginTransaction()
@@ -74,20 +109,29 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+        orderFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!ChatHelper.getInstance().isLogin()) {
+                    mFragmentManager = getSupportFragmentManager();
+                    mFragmentManager.beginTransaction()
+                            .replace(R.id.container, FragmentLogin.newInstance(FragmentLogin.class))
+                            .commit();
+                    Toast.makeText(getApplicationContext(),"请先登录！",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                mFragmentManager.beginTransaction()
+                        .replace(R.id.container, FragmentShare.newInstance(FragmentOrder.class))
+                        .commit();
+            }
+        });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        initView();
-
-        // deal with the nav_header
+        //add anim
+        float convCurY = convFab.getTranslationY();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(convFab, "translationY",100 , convCurY);
+        animator.setDuration(500);
+        animator.start();
     }
-
     public void initView() {
         ImageView loginView = (ImageView) findViewById(R.id.loginHead);
         loginView.setOnClickListener(new View.OnClickListener() {

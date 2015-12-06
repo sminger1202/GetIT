@@ -1,4 +1,4 @@
-package com.android.getit.dataRequest;
+package com.android.getit.dataRequestResult;
 
 import java.util.ArrayList;
 

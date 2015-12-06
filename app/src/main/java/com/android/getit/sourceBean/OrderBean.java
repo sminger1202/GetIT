@@ -1,16 +1,14 @@
 package com.android.getit.sourceBean;
 
 import android.text.TextUtils;
-
 import com.alibaba.fastjson.JSON;
-import com.android.getit.dataRequestResult.TicketInfoResult;
+import com.android.getit.dataRequestResult.OrderListResult;
 import com.android.getit.netBeanLoader.baseNetBean.BaseNetBean;
 
 /**
- * Created by sminger on 15-8-6.
+ * Created by sminger on 2015/12/5.
  */
-public class TicketBean extends BaseNetBean {
-
+public class OrderBean extends BaseNetBean {
     @Override
     public String getUrl() {
 
@@ -34,7 +32,7 @@ public class TicketBean extends BaseNetBean {
         if(TextUtils.isEmpty(json)){
             return  false;
         }
-        result = JSON.parseObject(json, TicketInfoResult.class) ;
+        result = JSON.parseObject(json, OrderListResult.class) ;
         return true;
     }
 
