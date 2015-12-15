@@ -11,7 +11,8 @@ import java.util.ArrayList;
 //{
 //        "OrderName":"订单名称",
 //        "OrderTime":"2015\/12\/5 13:00:28",
-//        "Services":[{"ServiceCount"      :1,
+//        "Services":[
+//        {"ServiceCount"      :1,
 //        "ServiceDescription":"只是安装服务，不提供安装盘",
 //        "ServiceID"         :1,
 //        "ServiceTypeID"     :1,
@@ -40,10 +41,10 @@ public class OrderListResult {
     public String UserName;  //:"wang"
 
     public static class Service {
-        int ServiceCount;         //     :1,
-        String ServiceDescription;//     :"只是安装服务，不提供安装盘",
-        int ServiceID;            //     :1,
-        int ServiceTypeID;        //     :1,
-        String ServiceTypeName;   //     :"自营"}，
+        public int ServiceCount;         //     :1,
+        public String ServiceDescription;//     :"只是安装服务，不提供安装盘",
+        public int ServiceID;            //     :1,
+        public int ServiceTypeID;        //     :1,
+        public String ServiceTypeName;   //     :"自营"}，
     }
 }

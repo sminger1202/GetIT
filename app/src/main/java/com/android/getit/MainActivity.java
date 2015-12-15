@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -81,27 +82,31 @@ public class MainActivity extends AppCompatActivity
                     orderFab.setVisibility(View.GONE);
                 } else {
                     convFab.setVisibility(View.VISIBLE);
-                    float convCurY = convFab.getTranslationY();
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(convFab, "translationY",100 , convCurY);
-                    animator.setDuration(500);
-                    animator.start();
                     orderFab.setVisibility(View.VISIBLE);
+                    float convCurY = convFab.getTranslationY();
+                    ObjectAnimator convAnimator = ObjectAnimator.ofFloat(convFab, "translationY",view.getHeight()
+                            + getResources().getDimension(R.dimen.fab_margin), convCurY);
+                    convAnimator.setDuration(200);
+                    convAnimator.start();
+
+                    float orderCurY = orderFab.getTranslationY();
+                    ObjectAnimator orderAnimator = ObjectAnimator.ofFloat(orderFab, "translationY", view.getHeight()
+                            + convFab.getHeight() + 2 * getResources().getDimension(R.dimen.fab_margin), orderCurY);
+                    orderAnimator.setDuration(200);
+                    orderAnimator.start();
+                    Log.d("curY", "convY:"  + convCurY + "    " + "order : " + orderCurY );
                 }
             }
         });
         convFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                mFragmentManager.beginTransaction()
-//                        .replace(R.id.container, FragmentShare.newInstance(0))
-//                        .commit();
                 // TODO: 2015/11/18 jump to simple chat activity
-                if(!ChatHelper.getInstance().isLogin()) {
-                    mFragmentManager = getSupportFragmentManager();
+                if (!ChatHelper.getInstance().isLogin()) {
                     mFragmentManager.beginTransaction()
                             .replace(R.id.container, FragmentLogin.newInstance(FragmentLogin.class))
                             .commit();
-                    Toast.makeText(getApplicationContext(),"请先登录！",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "请先登录！", Toast.LENGTH_LONG).show();
                     return;
                 }
                 Intent intent = new Intent();
@@ -112,12 +117,11 @@ public class MainActivity extends AppCompatActivity
         orderFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!ChatHelper.getInstance().isLogin()) {
-                    mFragmentManager = getSupportFragmentManager();
+                if (!ChatHelper.getInstance().isLogin()) {
                     mFragmentManager.beginTransaction()
                             .replace(R.id.container, FragmentLogin.newInstance(FragmentLogin.class))
                             .commit();
-                    Toast.makeText(getApplicationContext(),"请先登录！",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "请先登录！", Toast.LENGTH_LONG).show();
                     return;
                 }
                 mFragmentManager.beginTransaction()
@@ -125,12 +129,6 @@ public class MainActivity extends AppCompatActivity
                         .commit();
             }
         });
-
-        //add anim
-        float convCurY = convFab.getTranslationY();
-        ObjectAnimator animator = ObjectAnimator.ofFloat(convFab, "translationY",100 , convCurY);
-        animator.setDuration(500);
-        animator.start();
     }
     public void initView() {
         ImageView loginView = (ImageView) findViewById(R.id.loginHead);
@@ -226,12 +224,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationFragmentSelected(int id) {
         if (id == R.id.nav_home) {
-            mFragmentManager = getSupportFragmentManager();
             mFragmentManager.beginTransaction()
                     .replace(R.id.container, FragmentHome.newInstance(FragmentHome.class))
                     .commit();
         } else if (id == Utils.REGISTER) {
-            mFragmentManager = getSupportFragmentManager();
             mFragmentManager.beginTransaction()
                     .replace(R.id.container, FragmentRegister.newInstance(FragmentRegister.class))
                     .commit();

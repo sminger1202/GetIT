@@ -156,7 +156,9 @@ public class SimpleChat extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(msgReceiver);
+        if (msgReceiver != null) {
+            unregisterReceiver(msgReceiver);
+        }
     }
 
     public class MyAdapter extends BaseAdapter {

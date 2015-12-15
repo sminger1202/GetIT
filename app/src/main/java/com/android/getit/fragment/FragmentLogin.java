@@ -103,7 +103,7 @@ public class FragmentLogin extends BaseFragment {
             return;
         }
 
-        UserHelper.getInstance().userLogin(getActivity().getApplicationContext(), currentUsername, currentPassword, new ChaterCallback(){
+        UserHelper.getInstance().userLogin(getActivity(), currentUsername, currentPassword, new ChaterCallback(){
             @Override
             public void onSuccess(){
                 //如果登陆成功，那么进入正式页
