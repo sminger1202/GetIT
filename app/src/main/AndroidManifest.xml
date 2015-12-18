@@ -45,6 +45,10 @@
             android:name=".ui.SimpleChat">
 
         </activity>
+        <activity
+            android:name=".ui.ChatActivity">
+
+        </activity>
         <service android:name="com.easemob.chat.EMChatService" />
     </application>
 

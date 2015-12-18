@@ -52,9 +52,7 @@ public class GetITApp extends MultiDexApplication  {
         initPreferences();
 
         initEMChat();
-
-
-
+        
     }
 
     @Override

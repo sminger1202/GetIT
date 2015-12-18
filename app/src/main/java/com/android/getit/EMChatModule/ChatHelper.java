@@ -43,6 +43,9 @@ public class ChatHelper {
     private boolean isContactsSyncedWithServer = false;
     private boolean isBlackListSyncedWithServer = false;
 
+    // 客服ID
+    static public String serviceID = "kefu";
+
     private ChatHelper(){
 
     }
@@ -63,27 +66,9 @@ public class ChatHelper {
     public void init(Context context) {
         if (EaseUI.getInstance().init(context)) {
             mAppContext = context;
-
-//            EMChat.getInstance().init(mAppContext);// 在EaseUI中已经对EMChat初始化了。
-
-            //设为调试模式，打成正式包时，最好设为false，以免消耗额外的资源
             EMChat.getInstance().setDebugMode(true);
-            //get easeui instance
             mEaseUI = EaseUI.getInstance();
-            //调用easeui的api设置providers
-//            setEaseUIProviders();
-//            demoModel = new DemoModel(context);
-//            //设置chat options
-//            setChatoptions();
-//            //初始化PreferenceManager
-//            PreferenceManager.init(context);
-//            //初始化用户管理类
-//            getUserProfileManager().init(context);
-//
-//            //设置全局监听
-//            setGlobalListeners();
-//            broadcastManager = LocalBroadcastManager.getInstance(appContext);
-//            initDbDao();
+
         }
     }
 

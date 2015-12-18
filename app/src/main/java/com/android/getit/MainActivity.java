@@ -22,12 +22,15 @@ import com.android.getit.EMChatModule.ChatHelper;
 import com.android.getit.UserModule.UserHelper;
 import com.android.getit.Utils.Utils;
 import com.android.getit.fragment.BaseFragment;
+import com.android.getit.fragment.FragmentChat;
 import com.android.getit.fragment.FragmentHome;
 import com.android.getit.fragment.FragmentLogin;
 import com.android.getit.fragment.FragmentOrder;
 import com.android.getit.fragment.FragmentRegister;
 import com.android.getit.fragment.FragmentShare;
+import com.android.getit.ui.ChatActivity;
 import com.android.getit.ui.SimpleChat;
+import com.easemob.easeui.EaseConstant;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BaseFragment.callBack{
@@ -110,8 +113,9 @@ public class MainActivity extends AppCompatActivity
                     return;
                 }
                 Intent intent = new Intent();
-                intent.setClass(getApplicationContext(), SimpleChat.class);
+                intent.setClass(getApplicationContext(), ChatActivity.class);
                 startActivity(intent);
+
             }
         });
         orderFab.setOnClickListener(new View.OnClickListener() {
