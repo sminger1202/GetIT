@@ -46,6 +46,8 @@ public class ChatHelper {
     // 客服ID
     static public String serviceID = "kefu";
 
+    static public boolean isChatOnservice = false;
+
     private ChatHelper(){
 
     }

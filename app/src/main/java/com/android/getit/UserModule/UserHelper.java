@@ -1,18 +1,10 @@
 package com.android.getit.UserModule;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.android.getit.EMChatModule.ChatHelper;
 import com.android.getit.EMChatModule.ChaterCallback;
-import com.android.getit.R;
-import com.android.getit.netBeanLoader.IHttpRequest;
-import com.easemob.EMCallBack;
-import com.easemob.chat.EMChat;
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMGroupManager;
+import com.android.getit.network.IHttpRequest;
 
 /**
  * Created by sminger on 2015/11/16.
@@ -26,6 +18,7 @@ public class UserHelper {
     private static boolean isLogInState = false;
     private static String mUserName = null;
     private static IHttpRequest mLoginRequest;
+    public static final String COOKIE = "COOKIE";
     public UserHelper(){
     }
 
