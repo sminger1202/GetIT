@@ -6,7 +6,6 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.android.getit.GetITApp;
 import com.android.getit.UserModule.UserHelper;
-import com.android.getit.Utils.JsonUtils;
 import com.android.getit.Utils.Utils;
 import com.android.getit.Utils.YoukuAsyncTask;
 import com.android.getit.android.GetITAPI;
@@ -21,10 +20,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * * HTTP请求类 使用方法示例： Initial initial = new Initial(); IHttpRequest httpRequest =
@@ -334,190 +329,6 @@ public class HttpRequestManager implements IHttpRequest {
         }
         sum = sum.substring(0, sum.length() - 2);
         return sum;
-    }
-
-
-    /**
-     * 加载广告接口
-     *
-     * @param uri
-     * @return
-     */
-//    private String downloadAdUrl(String uri, int connectTime, int readTimeout, String cookieKey) {
-//        InputStream is = null;
-//        int isModify = 0;
-//        try {
-//            URL url = new URL(uri);
-//            Log.d("Youku", "url = " + url);
-//            // System.setProperty("http.keepAlive", "false");
-//            // if (BuildConfig.DEBUG) {
-//            Log.d("HttpRequestManager#downloadUri()", uri);
-//            // }
-//            // Log.d("testcache2", uri);
-//            formatUri = TudouApi.formatURL(uri, isSetCookie);
-//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//            conn.setReadTimeout(readTimeout);
-//            conn.setConnectTimeout(connectTime);
-//            conn.setRequestMethod(method);
-//            conn.setDoInput(true);
-//
-//            final String localAdCookie = GetITApp.getPreference(cookieKey, null);
-//            if (UserBean.getInstance().isLogin()) {
-//                conn.setRequestProperty("Cookie", !TextUtils.isEmpty(localAdCookie) ? (Youku.COOKIE + localAdCookie) : Youku.COOKIE);
-//            } else if (!TextUtils.isEmpty(localAdCookie)) {
-//                conn.setRequestProperty("Cookie", localAdCookie);
-//            }
-//            conn.setRequestProperty("User-Agent", Youku.User_Agent);
-//            conn.connect();
-//
-//            int response = conn.getResponseCode();
-//            Log.d("YoukuCacheTag", conn.getHeaderFields().toString());
-//            String eTag = conn.getHeaderField("Etag");
-//            if (response == HttpURLConnection.HTTP_OK) {
-//                is = conn.getInputStream();
-//                dataString = Utils.convertStreamToString(is);
-//                Log.d("Youku", "dataString = " + dataString);
-//                try {
-//                    new JSONObject(dataString);
-//                    updateADCookie(conn, cookieKey, localAdCookie);
-//                    state = SUCCESS;
-//                    if (eTag != null) {
-//                        GetITApp.savePreference(formatUri, eTag);
-//                        if (isModify == 1) {
-//                            Log.d("YoukuCacheTag", "is Modify:" + true);
-//                        }
-//                        TudouApi.saveUrlCacheToLocal(formatUri, dataString);
-//                    }
-//                } catch (Exception e) {
-//                    state = FAIL;
-//                    fail_reason = STATE_ERROR_REQUEST_DATA_FAIL;
-//                }
-//            } else if (response == HttpURLConnection.HTTP_BAD_REQUEST) {
-//                is = conn.getErrorStream();
-//                fail_reason = Utils.convertStreamToString(is);
-//            } else if (response == HttpURLConnection.HTTP_NOT_MODIFIED) {
-//                if (isModify == 1) {
-//                    Log.d("YoukuCacheTag", "is Modify:" + false + " ETAG = " + formatUri);
-//                }
-//                updateADCookie(conn, cookieKey, localAdCookie);
-//                state = SUCCESS;
-//            } else if (response == HttpURLConnection.HTTP_GONE) {
-//                is = conn.getErrorStream();
-//                double d = Double.parseDouble(Utils.convertStreamToString(is));
-//                TudouURLContainer.TIMESTAMP = (long) d
-//                        - System.currentTimeMillis() / 1000;
-//                this.uri = TudouURLContainer.updateUrl(this.uri, method);
-//                dataString = downloadUri(this.uri, method, isSetCookie, connectTime, readTimeout);
-//            } else {
-//                fail_reason = "获取数据失败，请稍后重试";
-//            }
-//            return dataString;
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//
-//            fail_reason = STATE_ERROR_MALFORMED_URL_EXCEPTION;
-//            return dataString;
-//        } catch (ProtocolException e) {
-//            e.printStackTrace();
-//
-//            fail_reason = STATE_ERROR_PROTOCOL_EXCEPTION;
-//            return dataString;
-//        } catch (SocketTimeoutException e) {
-//            e.printStackTrace();
-//
-//            fail_reason = STATE_ERROR_TIMEOUT;
-//            return dataString;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//
-//            fail_reason = STATE_ERROR_REQUEST_DATA_FAIL;
-//            return dataString;
-//        } finally {
-//            if (null != is) {
-//                try {
-//                    is.close();
-//                } catch (IOException e) {
-//                }
-//            }
-//        }
-//    }
-
-//    /**
-//     * 对登出数据解析
-//     *
-//     * @param logout
-//     * @return
-//     */
-//    private String parseLogoutJson(String logout) {
-//        try {
-//            Log.d("TAG_TUDOU", "logout=====" + logout);
-//            if (TextUtils.isEmpty(logout)) {
-//                return logout;
-//            }
-//            JSONObject logoutJson = JsonUtils.loadJson(logout);
-//            int code = JsonUtils.getJsonInt(logoutJson, "code");
-//            if (code == 400) {
-//                JSONObject desc = JsonUtils.getJsonObject(logoutJson, "desc");
-//                int yktk_result = JsonUtils.getJsonInt(desc, "yktk_result");
-//                if (yktk_result == -1) {
-//                    if (UserBean.getInstance().isLogin()) {
-//                        LoginManagerImpl.logoutS();
-//                    }
-//                    logout = "您的密码已经修改，请重新登陆";
-//                }
-//            }
-//        } catch (Exception e) {
-//        }
-//        return logout;
-//    }
-
-//	private void saveADCookie(HttpURLConnection aConn, String cookieKey) {
-//		// 获取cookie
-//		Map<String, List<String>> map = aConn.getHeaderFields();
-//		Set<String> set = map.keySet();
-//		for (Iterator iterator = set.iterator(); iterator.hasNext();) {
-//			String key = (String) iterator.next();
-//			if ("Set-Cookie".equals(key)) {
-//				// System.out.println("key=" + key + ",开始获取cookie");
-//				List<String> list = map.get(key);
-//				StringBuffer advBuffer = new StringBuffer();
-//				for (String str : list) {
-//					advBuffer.append(str);
-//					advBuffer.append(";");
-//				}
-//
-//				final String ad_cookie = advBuffer.toString();
-//				if (!TextUtils.isEmpty(ad_cookie)) {
-//					Youku.savePreference(cookieKey, ad_cookie);
-//				}
-//			}
-//		}
-//	}
-
-    public static void updateADCookie(HttpURLConnection aConn, String cookieKey, String oldAdCookie) {
-        // 获取cookie
-        Map<String, List<String>> map = aConn.getHeaderFields();
-        Set<String> set = map.keySet();
-        for (Iterator iterator = set.iterator(); iterator.hasNext(); ) {
-            String key = (String) iterator.next();
-            if ("Set-Cookie".equals(key)) {
-                // System.out.println("key=" + key + ",开始获取cookie");
-                List<String> list = map.get(key);
-                StringBuffer advBuffer = new StringBuffer();
-                for (String str : list) {
-                    advBuffer.append(str);
-                    advBuffer.append(";");
-                }
-
-                final String ad_cookie = advBuffer.toString();
-                if (TextUtils.isEmpty(oldAdCookie)) {
-                    GetITApp.savePreference(cookieKey, ad_cookie);
-                } else if (!TextUtils.isEmpty(oldAdCookie) && TextUtils.isEmpty(ad_cookie)) {
-                    String newCookie = Utils.formatCookie(ad_cookie, oldAdCookie);
-                    GetITApp.savePreference(cookieKey, newCookie);
-                }
-            }
-        }
     }
 
     /**
