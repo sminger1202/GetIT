@@ -1,8 +1,10 @@
 package com.android.getit;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
@@ -33,7 +35,10 @@ import java.util.List;
  */
 public class GetITApp extends MultiDexApplication  {
     public static String TAG = GetITApp.class.getSimpleName();
+
     public static Context context = null;
+
+    public static final String VERSION_NAME = "version";
     public static String versionName;
 
     public static String appName;
@@ -60,6 +65,8 @@ public class GetITApp extends MultiDexApplication  {
 
         if(mIsMainProcess) {
 
+            initPreferences();
+
             FrescoLoaderImage.InitLoaderImage(this);
 
             ImageLoaderManager.initImageLoaderConfiguration(this);
@@ -67,8 +74,6 @@ public class GetITApp extends MultiDexApplication  {
             DeviceInfo.init();
 
             initVersionInfo();
-
-            initPreferences();
 
             initURLCacheDataPath();
 
@@ -102,6 +107,7 @@ public class GetITApp extends MultiDexApplication  {
             Profile.VER = versionName;
             Log.e("", e.toString());
         }
+        savePreference(VERSION_NAME, versionName);
     }
 
 
@@ -232,6 +238,16 @@ public class GetITApp extends MultiDexApplication  {
             public void onSuccess(HttpRequestManager httpRequestManager) {
                 Log.d(TAG, httpRequestManager.getDataString());
                 InitResult initResult = JSON.parseObject(httpRequestManager.getDataString(), InitResult.class);
+
+                String verName = getPreference(VERSION_NAME);
+                if(!verName.equals(initResult.giSwitch.NewVersion)) {
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri content_url = Uri.parse(initResult.giSwitch.ApkAddress);
+                    intent.setData(content_url);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                    startActivity(intent);
+                }
             }
 
             @Override
